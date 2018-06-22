@@ -1,6 +1,7 @@
 import Vue from 'vue'
+import App from '../App'
 import Router from 'vue-router'
-import {routerMode} from './config/env'
+import {routerMode} from '../config/env.js'
 
 const home = () => import('../page/home/home')
 const city = () => import('../page/city/city')
@@ -52,7 +53,7 @@ const notAllow = () => import('../components/common/401.vue')
 
 Vue.use(Router)
 
-const router = new Router ({
+const router = new Router({
   mode: routerMode, // 默认值: "hash" (浏览器环境) | "abstract" (Node.js 环境)可选值: "hash" | "history" | "abstract"
   // hash: 使用 URL hash 值来作路由。支持所有浏览器，包括不支持 HTML5 History Api 的浏览器
   // history: 依赖 HTML5 History API 和服务器配置。查看 HTML5 History 模式
@@ -64,8 +65,7 @@ const router = new Router ({
       if (from.meta.keepAlive) {
         from.meta.savedPosition = document.body.scrollTop
       }
-        return { x: 0, y: to.meta.savedPosition || 0
-      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
     }
   },
   routes: [{
@@ -119,7 +119,7 @@ const router = new Router ({
           }]
         }]
       },
-      //确认订单页
+      // 确认订单页
       {
         path: '/confirmOrder',
         component: confirmOrder,
@@ -165,13 +165,13 @@ const router = new Router ({
             component: setUserName
           }, {
             path: 'address',
-            component: address,     // 编辑地址
-            children:[{
-              path:'add',
-              component:add,
-              children:[{
-                path:'addDetail',
-                component:addDetail
+            component: address, // 编辑地址
+            children: [{
+              path: 'add',
+              component: add,
+              children: [{
+                path: 'addDetail',
+                component: addDetail
               }]
             }]
           }]
@@ -224,9 +224,9 @@ const router = new Router ({
       {
         path: '/service',
         component: service,
-          children: [{
-            path: 'questionDetail', // 订单详情页
-            component: questionDetail
+        children: [{
+          path: 'questionDetail', // 订单详情页
+          component: questionDetail
         }]
       },
       // 余额
