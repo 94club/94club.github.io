@@ -49,6 +49,7 @@ const questionDetail = () => import('../page/service/children/questionDetail')
 const find = () => import('../page/find/find')
 const download = () => import('../page/download/download')
 const notFound = () => import('../components/common/404.vue')
+const test = () => import('../components/common/test.vue')
 const notAllow = () => import('../components/common/401.vue')
 
 Vue.use(Router)
@@ -267,6 +268,10 @@ const router = new Router({
           path: 'detail', // 积分说明
           component: pointsDetail
         }]
+      },
+      {
+        path: 'test',
+        component: test
       },
       {
         path: '401',

@@ -5,3 +5,5 @@ css初始化 结构目录创建   03d02d43f7825424569c1b1b638255565026ca4e
 安装依赖 完成首页 
 npm i vuex showdown iscroll fastclick better-scroll axios -S
 npm i node-sass sass-loader http-proxy-middleware -D
+5f18534dcb413eb2714da0f95e8ea4869ef489c4
+引入mint-ui vue-light-swiper vue-awesome-swiper 写一个test页（mint-ui暂时放在生产依赖）

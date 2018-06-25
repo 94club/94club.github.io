@@ -1,0 +1,4 @@
+#### navbar 注意事项
+1 安装swiper3 npm i vue-awesome-swiper@2.6.7 -S 
+2 每一个slide的width，强制auto
+TODO 数据异步获取 切换动画效果  上拉加载  

@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 import './config/rem'
 import FastClick from 'fastclick'
 if ('addEventListener' in document) {
@@ -11,7 +14,8 @@ if ('addEventListener' in document) {
     FastClick.attach(document.body)
   }, false)
 }
-
+Vue.use(MintUI)
+Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false // 生产环境去掉vue的警告信息
 /* eslint-disable no-new */
 new Vue({

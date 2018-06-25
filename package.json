@@ -15,8 +15,11 @@
     "better-scroll": "^1.12.1",
     "fastclick": "^1.0.6",
     "iscroll": "^5.2.0",
+    "mint-ui": "^2.2.13",
     "showdown": "^1.8.6",
     "vue": "^2.5.2",
+    "vue-awesome-swiper": "^2.6.7",
+    "vue-light-swiper": "^1.0.9",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
