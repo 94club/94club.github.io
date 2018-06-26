@@ -37,3 +37,5 @@ Boolean，是指在DOM树中，注册了该listener的元素，是否会先于�
 沿着DOM树向上冒泡的事件不会触发被指定为useCapture（也就是设为true）的listener。
 当一个元素嵌套了另一个元素，两个元素都对同一个事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。
 事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 事件流 及 JavaScript Event order 文档。 如果没有指定， useCapture 默认为 false 。
+
+TODO svg换成iconfont 让小艾做一套

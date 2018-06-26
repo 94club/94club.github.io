@@ -10,3 +10,4 @@
   win.addEventListener(resizeEvt, recalc, false)
   doc.addEventListener('DOMContentLoaded', recalc, false)
 })(document, window)
+// 320是iphone5尺寸  375是iphone6
