@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height:2000px">
     <swiper :options="swiperOption" :not-next-tick="swiperOption.notNextTick" ref="swiper1">
     <!-- slides -->
     <swiper-slide
@@ -14,6 +14,7 @@
     <!-- slides -->
     <swiper-slide>I'm Slide {{floorNavData.activeIndex}}</swiper-slide>
   </swiper>
+  <div class="lorem" :style="{opacity: opacityValue}">Lorem ipsum tam similique dolor veniam iure eveniet non vel ut eum iusto sapiente est.</div>
   </div>
 </template>
 <script>
@@ -44,7 +45,8 @@ export default {
           // setCurrentSlide($(".swiper1 .swiper-slide").eq(n), n);
           // swiper1.slideTo(n, 500, false);
         }
-      }
+      },
+      opacityValue: 0.9
     }
   },
   computed: {
@@ -54,6 +56,9 @@ export default {
     swiper2 () {
       return this.$refs.swiper2.swiper
     }
+  },
+  created () {
+    window.addEventListener('scroll', this.getOpacityValue)
   },
   mounted () {
     // current swiper instance
@@ -65,6 +70,10 @@ export default {
   methods: {
     onFloorNav (index) {
       this.floorNavData.activeIndex = index
+    },
+    getOpacityValue () {
+      let b = document.body.scrollTop / 550 || document.documentElement.scrollTop / 550
+      this.opacityValue = b > 0.9 ? 0.9 : b
     }
   }
 }
@@ -75,5 +84,8 @@ export default {
 }
 .is-active {
   border-bottom: 1px solid red;
+}
+.lorem {
+  background: #d9241c;
 }
 </style>

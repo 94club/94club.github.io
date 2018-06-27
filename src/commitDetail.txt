@@ -12,3 +12,5 @@ npm i node-sass sass-loader http-proxy-middleware -D
 note: https://github.com/KokoTa/Vue2-transition 路由切换动画
 d5c6d2bf873068e96234181d1afc507fce71a19a
 ***  引入store 改写了请求方式 完成首页和登录页
+6f37a2e017ae903142b25db9a9e67b06e5138412
+*** 增加一个scroll事件的监听
