@@ -3,11 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import './config/rem'
+import {baseUrl} from './config/env'
 import axios from 'axios'
 import FastClick from 'fastclick'
 if ('addEventListener' in document) {
@@ -23,12 +25,8 @@ const axiosIns = axios.create()
 // 在main.js设置全局的请求次数，请求的间隙
 axiosIns.defaults.retry = 4
 axiosIns.defaults.retryDelay = 1000
-if (process.env.NODE_ENV === 'development') {
-  axiosIns.defaults.baseURL = 'http://192.168.***:8080'
-}
-axiosIns.defaults.retry = 4
-axiosIns.defaults.retryDelay = 1000
 axiosIns.defaults.timeout = 5000
+axiosIns.defaults.baseURL = baseUrl
 // 添加请求拦截器
 axiosIns.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
@@ -105,6 +103,7 @@ ajaxMethod.forEach((method) => {
 Vue.prototype.$axios = api
 const instance = new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'

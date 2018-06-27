@@ -9,6 +9,7 @@ let routerMode = 'hash'
 let imgBaseUrl = ''
 if (process.env.NODE_ENV === 'development') {
   imgBaseUrl = '/img/'
+  baseUrl = '//elm.cangdu.org'
 } else if (process.env.NODE_ENV === 'production') {
   baseUrl = '//elm.cangdu.org'
   imgBaseUrl = '//elm.cangdu.org/img/'
