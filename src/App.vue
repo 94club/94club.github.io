@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './style/common';
+@import './style/common.scss'; // reset 和 公共的css
 .router-fade-enter-active, .router-fade-leave-active {
   transition: opacity .3s;
 }

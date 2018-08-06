@@ -1,6 +1,4 @@
-$blue: #3190e8;  
-$bc: #e4e4e4;
-$fc:#fff;
+
 
 // 背景图片地址和大小
 @mixin bis($url) { 
@@ -24,7 +22,7 @@ $fc:#fff;
 }
 
 //定位上下左右居中
-@mixin center {  
+@mixin ctl {  
 	position: absolute;
 	top: 50%;
     left: 50%;
@@ -38,7 +36,7 @@ $fc:#fff;
     transform: translateY(-50%);
 }
 
-//定位上下居中
+//定位左右居中
 @mixin cl {  
 	position: absolute;
 	left: 50%;
@@ -68,3 +66,10 @@ $fc:#fff;
 	justify-content: $type;
 
 }
+// 颜色
+$tip_icon: #f8cb86;
+$tip_text: #333;
+$tip_confirm: #4cd964;
+$blue: #3190e8;  
+$bc: #e4e4e4;
+$fc:#fff;
