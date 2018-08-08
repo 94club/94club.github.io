@@ -33,9 +33,12 @@ export default {
   },
   mounted () {
     // 获取用户信息
-    this.$axios.get(urls.user + '?user_id=' + getStore('user_id')).then((res) => {
-      this.$store.commit('GET_USERINFO', res)
-    })
+    let userId = getStore('user_id')
+    if (userId) {
+      this.$axios.get(urls.user + '?user_id=' + userId).then((res) => {
+        this.$store.commit('GET_USERINFO', res)
+      })
+    }
   },
   props: ['signinUp', 'headTitle', 'goBack'],
   computed: {

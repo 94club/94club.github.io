@@ -25,16 +25,10 @@ const axiosIns = axios.create()
 // 在main.js设置全局的请求次数，请求的间隙
 axiosIns.defaults.retry = 4
 axiosIns.defaults.retryDelay = 1000
-axiosIns.defaults.timeout = 5000
+axiosIns.defaults.timeout = 20000
 axiosIns.defaults.baseURL = baseUrl
 // 添加请求拦截器
 axiosIns.interceptors.request.use(function (config) {
-  // 在发送请求之前做些什么
-  // const token = window.localStorage.getItem('token')
-  // 把token放到header里面
-  // if (token) {
-  //   config.headers['token'] = token
-  // }
   return config
 }, function (error) {
   // 对请求错误做些什么
@@ -78,10 +72,10 @@ ajaxMethod.forEach((method) => {
   api[method] = function (uri, data, config) {
     return new Promise(function (resolve, reject) {
       axiosIns[method](uri, data, config).then((response) => {
-        if (response.data.code === 401) {
+        if (response.data.status === 401) {
           instance.$router.replace('/login')
-        } else if (response.data.code === 200) {
-          resolve(response)
+        } else if (response.data.status === 200) {
+          resolve(response.data.data)
         }
       }).catch(function (error) {
         console.log(error)

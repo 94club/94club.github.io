@@ -3,6 +3,36 @@
     <head-top signin-up='home'>
       <span slot='logo' class="head_logo"  @click="reload">ele.me</span>
     </head-top>
+    <nav class="city_nav">
+      <div class="city_tip">
+        <span>当前定位城市：</span>
+        <span>定位不准确， 请在城市列表中选择</span>
+      </div>
+      <router-link :to="'/city/' + guessCityid" class="guess_city">
+        <span>{{guessCity}}</span>
+        <svg class="arrow_right">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
+        </svg>
+      </router-link>
+      <section class="hot_city_container">
+        <h4 class="city_title">热门城市</h4>
+        <ul class="citylistul clear">
+          <router-link tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">{{item.name}}</router-link>
+        </ul>
+      </section>
+      <section class="group_city_container">
+        <ul class="letter_classify">
+          <li class="letter_classify_li" v-for="(value, key, index) in sortgroupcity" :key="key">
+            <h4 class="city_title">{{key}}
+              <span v-if="index === 0">(按字母排序)</span>
+            </h4>
+            <ul class="groupcity_name_container citylistul clear">
+              <router-link tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id" class="ellipsis">{{item.name}}</router-link>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
   </div>
 </template>
 <script>
@@ -18,16 +48,12 @@ export default {
     }
   },
   mounted () {
-    // 获取当前城市
     // 获取热门城市
-    let guessCityObj = this.getCity('guess')
-    this.hotcity = this.getCity('hot')
+    this.getHotCity('hot')
     // 获取所有城市
-    this.groupcity = this.getCity('group')
-    if (this.guessCity) {
-      this.guessCity = guessCityObj.name
-      this.guessCityid = guessCityObj.id
-    }
+    this.getGroupCity('group')
+    // 获取猜想城市
+    // this.getGuessCity('guess')
   },
   components: {
     headTop
@@ -44,11 +70,26 @@ export default {
       }
       return sortobj
     }
+
   },
   methods: {
-    getCity (typeValue) {
+    getGuessCity (typeValue) {
       this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
-        return res
+        this.guessCityObj = res
+        if (this.guessCityObj) {
+          this.guessCity = this.guessCityObj.name
+          this.guessCityid = this.guessCityObj.id
+        }
+      })
+    },
+    getGroupCity (typeValue) {
+      this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
+        this.groupcity = res
+      })
+    },
+    getHotCity (typeValue) {
+      this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
+        this.hotcity = res
       })
     },
     // 点击图标刷新页面
