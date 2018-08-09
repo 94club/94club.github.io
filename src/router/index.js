@@ -85,7 +85,7 @@ const router = new Router({
       },
       // 当前选择城市页
       {
-        path: '/city/:cityid',
+        path: '/city/:cityId',
         component: city
       },
       // 所有商铺列表页

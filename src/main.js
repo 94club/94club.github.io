@@ -25,7 +25,7 @@ const axiosIns = axios.create()
 // 在main.js设置全局的请求次数，请求的间隙
 axiosIns.defaults.retry = 4
 axiosIns.defaults.retryDelay = 1000
-axiosIns.defaults.timeout = 20000
+axiosIns.defaults.timeout = 40000
 axiosIns.defaults.baseURL = baseUrl
 // 添加请求拦截器
 axiosIns.interceptors.request.use(function (config) {
