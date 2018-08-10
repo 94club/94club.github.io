@@ -25,7 +25,7 @@
 <script>
 import headTop from '@/components/header/head'
 import {getStore, setStore, removeStore} from '@/config/mUtils'
-import url from '@/config/urls'
+import urls from '../../config/urls'
 
 export default {
   data () {
@@ -49,7 +49,7 @@ export default {
   methods: {
     getCityName () {
       this.cityId = this.$route.params.cityId
-      this.$axios.get(url.city + '/' + this.cityId).then((res) => {
+      this.$axios.get(urls.city + '/' + this.cityId).then((res) => {
         this.cityname = res.name
       })
     },
@@ -64,7 +64,7 @@ export default {
     postpois () {
       if (this.inputVaule) {
         let query = '?city_id=' + this.cityId + '&keyword=' + this.inputVaule + '&type=search'
-        this.$axios.get(url.searchplace + query).then((res) => {
+        this.$axios.get(urls.searchplace + query).then((res) => {
           console.log(res)
           this.historytitle = false
           this.placelist = res

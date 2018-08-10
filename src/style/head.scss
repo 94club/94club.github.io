@@ -13,8 +13,8 @@
             line-height: 2.2rem;
         }
         .head_login{
-            @include ct;
             right: 0.55rem;
+            @include ct;
             @include sc(0.65rem, $fc);
             .login_span{
                 color: $fc;

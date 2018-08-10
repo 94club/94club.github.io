@@ -64,7 +64,7 @@ const router = new Router({
       return savedPosition
     } else {
       if (from.meta.keepAlive) {
-        from.meta.savedPosition = document.body.scrollTop
+        from.meta.savedPosition = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
       }
       return { x: 0, y: to.meta.savedPosition || 0 }
     }

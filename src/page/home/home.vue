@@ -53,7 +53,7 @@ export default {
     // 获取所有城市
     this.getGroupCity('group')
     // 获取猜想城市
-    // this.getGuessCity('guess')
+    this.getGuessCity('guess')
   },
   components: {
     headTop

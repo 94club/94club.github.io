@@ -8,7 +8,7 @@ export default {
 		state.login = true
 		setStore('user_id', info.user_id)
   },
-  //获取用户信息存入vuex
+  // 获取用户信息存入vuex
 	[types.GET_USERINFO] (state, info) {
 		if (state.userInfo && (state.userInfo.username !== info.username)) {
 			return
@@ -21,5 +21,18 @@ export default {
 		} else {
 			state.userInfo = null
 		}
+	},
+	// 保存geohash
+	[types.SAVE_GEOHASH](state, geohash) {
+		state.geohash = geohash;
+		
+	},
+	// 记录当前经度纬度
+	[types.RECORD_ADDRESS](state, {
+		latitude,
+		longitude
+	}) {
+		state.latitude = latitude;
+		state.longitude = longitude;
 	}
 }

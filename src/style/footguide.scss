@@ -1,0 +1,27 @@
+@import '../../style/mixin';
+    #foot_guide{
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      box-shadow: 0 -0.026667rem 0.053333rem rgba(0,0,0,.1);
+      @include wh(100%, 1.95rem);
+      background-color: #fff;
+    }
+    .guide_item{
+    	flex: 1;
+    	display: flex;
+    	flex-direction: column;
+    	text-align: center;
+    	align-items: center;
+      .icon_style{
+        margin-top: .3rem;
+        @include wh(.8rem, .8rem);
+        fill: #ccc;
+      }
+      span{
+        @include sc(.45rem, #666);
+      }
+    }
