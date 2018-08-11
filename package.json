@@ -14,8 +14,6 @@
     "axios": "^0.18.0",
     "better-scroll": "^1.12.1",
     "fastclick": "^1.0.6",
-    "iscroll": "^5.2.0",
-    "mint-ui": "^2.2.13",
     "showdown": "^1.8.6",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^2.6.7",

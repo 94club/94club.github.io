@@ -12,7 +12,7 @@
       </router-link>
     </head-top>
     <nav class="msite_nav">
-      <div class="swiper-container" v-if="foodTypes.length">
+      <!-- <div class="swiper-container" v-if="foodTypes.length">
         <div class="swiper-wrapper">
           <div class="swiper-slide food_types_contaioner" v-for="(item, index) in foodTypes" :key="index">
             <router-link :to="{path: '/food', query: {geohash: geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
@@ -24,7 +24,17 @@
           </div>
         </div>
         <div class="swiper-pagenation"></div>
-      </div>
+      </div> -->
+      <vue-swiper v-if="foodTypes.length" :show-index.sync="showIndex"  indicators uselazyload :preload="1"  class="swiper-container" @slide-change="slideChange">
+        <vue-swiper-slide class="food_types_container"  v-for="(item, index) in foodTypes" :key="index">
+          <router-link :to="{path: '/food', query: {geohash: geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
+            <figure>
+              <img :src="imgBaseUrl + foodItem.image_url">
+              <figcaption>{{foodItem.title}}</figcaption>
+            </figure>
+          </router-link>
+        </vue-swiper-slide>
+      </vue-swiper>
       <img :src="flImageUrl" class="fl_back animation_opcity" v-else>
     </nav>
     <div class="shop_list_container">
@@ -46,8 +56,8 @@ import headTop from '@/components/header/head'
 import footGuide from '@/components/footer/footGuide'
 import shopList from '@/components/common/shoplist'
 import urls from '../../config/urls'
-// import '@/plugins/swiper.min.js'
-// import '@/style/swiper.min.css'
+import vueSwiper from '@/components/common/vue-swiper.vue'
+import vueSwiperSlide from '@/components/common/vue-swiper-slide.vue'
 export default {
   data () {
     return {
@@ -56,13 +66,16 @@ export default {
       foodTypes: [], // 食品分类列表
       hasGetData: false, // 是否已经获取地理位置数据，成功之后再获取商铺列表信息
       imgBaseUrl: 'https://fuss10.elemecdn.com', // 图片域名地址
-      flImageUrl: '../../images/f1.svg'
+      flImageUrl: '../../images/f1.svg',
+      showIndex: 0
     }
   },
   components: {
     headTop,
     shopList,
-    footGuide
+    footGuide,
+    vueSwiper,
+    vueSwiperSlide
   },
   beforeMount () {
     if (!this.$route.query.geohash) {
@@ -82,9 +95,11 @@ export default {
     ...mapMutations([
       'RECORD_ADDRESS', 'SAVE_GEOHASH'
     ]),
+    slideChange (index, oldIndex) {
+      console.log('showIndexChange:', index, oldIndex)
+    },
     getMsiteAddress () {
-      let query = 'geohash=' + this.geohash
-      this.$axios.get(urls.msiteAddress + query).then((res) => {
+      this.$axios.get(urls.msiteAddress + this.geohash).then((res) => {
         let msiteAddress = res
         if (msiteAddress) {
           this.msiteTitle = msiteAddress.name
@@ -112,13 +127,6 @@ export default {
           foodArr[j] = resArr.splice(0, 8)
         }
         this.foodTypes = foodArr
-      }).then(() => {
-        // 初始化swiper
-        // eslint-disable-next-line
-        // new Swiper('.swiper-container', {
-        //   pagination: '.swiper-pagination',
-        //   loop: true
-        // })
       })
     },
     // 解码url地址，求去restaurant_category_id值
@@ -133,3 +141,6 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import '@/style/msite.scss';
+</style>

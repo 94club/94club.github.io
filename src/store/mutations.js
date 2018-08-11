@@ -24,8 +24,7 @@ export default {
 	},
 	// 保存geohash
 	[types.SAVE_GEOHASH](state, geohash) {
-		state.geohash = geohash;
-		
+		state.geohash = geohash
 	},
 	// 记录当前经度纬度
 	[types.RECORD_ADDRESS](state, {

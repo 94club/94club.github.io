@@ -95,7 +95,7 @@ export default {
         this.placeHistory.push(choosePlace)
       }
       setStore('placeHistory', this.placeHistory)
-      this.$router.push({path: '/msite', query: {geohash}})
+      this.$router.push({path: '/msite', query: {geohash: geohash}})
     },
     clearAll () {
       removeStore('placeHistory')

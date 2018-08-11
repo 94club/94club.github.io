@@ -78,7 +78,8 @@ export default {
       showBackStatus: false, // 显示返回顶部按钮
       showLoading: true, // 显示加载动画
       touchend: false, // 没有更多数据
-      imgBaseUrl: imgBaseUrl
+      imgBaseUrl: imgBaseUrl,
+      touched: false
     }
   },
   mounted () {
@@ -97,7 +98,7 @@ export default {
   },
   methods: {
     async initData () {
-      let res = await this.getShopList((this.latitude, this.longitude, this.offset, this.restaurantCategoryId))
+      let res = await this.getShopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId)
       this.shopListArr = [...res]
       if (res.length < 20) {
         this.touchend = true
@@ -108,16 +109,16 @@ export default {
         this.showBackStatus = callbackStatus
       })
     },
-    getShopList (latitude, longitude, offset, restaurantCategoryId = '', restaurantCategoryIds = '', orderBy = '', deliveryMode = '', supportIds = []) {
+    getShopList (latitude, longitude, offset = 0, restaurantCategoryId = '', restaurantCategoryIds = '', orderBy = '', deliveryMode = '', supportIds = []) {
       let supportStr = ''
       supportIds.forEach(item => {
         if (item.status) {
           supportStr += '&support_ids[]=' + item.id
         }
       })
-      let query = '?latitude=' + latitude + '&longitude=' + longitude + '&offset=' + offset + '&limit=20' + '&restaurant_category_id=' + restaurantCategoryId + 'restaurant_category_ids[]' + restaurantCategoryIds
+      let query = '?latitude=' + latitude + '&longitude=' + longitude + '&offset=' + offset + '&limit=20' + '&restaurant_category_id=' + restaurantCategoryId + '&restaurant_category_ids[]' + restaurantCategoryIds
       query += '&order_by=' + orderBy + '&delivery_mode[]=' + deliveryMode + supportStr
-      this.$axios.get(urls.getShopList + query).then((res) => {
+      this.$axios.get(urls.shopList + query).then((res) => {
         return res
       })
     },
