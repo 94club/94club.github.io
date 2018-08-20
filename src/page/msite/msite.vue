@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top sign-up="msite">
+    <head-top signin-up="msite">
       <router-link to="/search/geohash" class="link_search" slot="search">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <circle cx="8" cy="8" r="7" stroke="rgb(255,255,255)" stroke-width="1" fill="none"/>
@@ -12,19 +12,6 @@
       </router-link>
     </head-top>
     <nav class="msite_nav">
-      <!-- <div class="swiper-container" v-if="foodTypes.length">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide food_types_contaioner" v-for="(item, index) in foodTypes" :key="index">
-            <router-link :to="{path: '/food', query: {geohash: geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
-              <figure>
-                <img :src="imgBaseUrl + foodItem.image_url">
-                <figcaption>{{foodItem.title}}</figcaption>
-              </figure>
-            </router-link>
-          </div>
-        </div>
-        <div class="swiper-pagenation"></div>
-      </div> -->
       <vue-swiper v-if="foodTypes.length" :show-index.sync="showIndex"  indicators uselazyload :preload="1"  class="swiper-container" @slide-change="slideChange">
         <vue-swiper-slide class="food_types_container"  v-for="(item, index) in foodTypes" :key="index">
           <router-link :to="{path: '/food', query: {geohash: geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
@@ -111,7 +98,7 @@ export default {
     },
     getGuessCity () {
       this.$axios.get(urls.city + '?type=guess').then((res) => {
-        let cityGuess = res
+        let cityGuess = res.data
         if (cityGuess) {
           this.geohash = cityGuess.latitude + ',' + cityGuess.longitude
         }
@@ -120,8 +107,8 @@ export default {
     getMisteFoodType (geohash) {
       let query = '?geohash=' + geohash + '&group_type=1&flags[]=F'
       this.$axios.get(urls.misteFoodType + query).then((res) => {
-        let resLength = res.length
-        let resArr = [...res] // 返回一个新的数组
+        let resLength = res.data.length
+        let resArr = [...res.data] // 返回一个新的数组
         let foodArr = []
         for (let i = 0, j = 0; i < resLength; i += 8, j++) {
           foodArr[j] = resArr.splice(0, 8)

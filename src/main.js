@@ -21,6 +21,7 @@ axiosIns.defaults.retry = 4
 axiosIns.defaults.retryDelay = 1000
 axiosIns.defaults.timeout = 40000
 axiosIns.defaults.baseURL = baseUrl
+axiosIns.defaults.withCredentials = true
 // 添加请求拦截器
 axiosIns.interceptors.request.use(function (config) {
   return config
@@ -36,29 +37,30 @@ axiosIns.interceptors.response.use(function (response) {
 }, function (error) {
   // 请求错误时做些事
   // 请求超时的之后，抛出 error.code = ECONNABORTED的错误..错误信息是 timeout of  xxx ms exceeded
-  if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
-    var config = error.config
-    config.__retryCount = config.__retryCount || 0
-    if (config.__retryCount >= config.retry) {
-      // Reject with the error
-      // window.location.reload()
-      return Promise.reject(error)
-    }
-    // Increase the retry count
-    config.__retryCount += 1
-    // Create new promise to handle exponential backoff
-    var backoff = new Promise(function (resolve) {
-      setTimeout(function () {
-        // console.log('resolve')
-        resolve()
-      }, config.retryDelay || 1)
-    })
-    return backoff.then(function () {
-      return axiosIns(config)
-    })
-  } else {
-    return Promise.reject(error)
-  }
+  // if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
+  //   var config = error.config
+  //   config.__retryCount = config.__retryCount || 0
+  //   if (config.__retryCount >= config.retry) {
+  //     // Reject with the error
+  //     // window.location.reload()
+  //     return Promise.reject(error)
+  //   }
+  //   // Increase the retry count
+  //   config.__retryCount += 1
+  //   // Create new promise to handle exponential backoff
+  //   var backoff = new Promise(function (resolve) {
+  //     setTimeout(function () {
+  //       // console.log('resolve')
+  //       resolve()
+  //     }, config.retryDelay || 1)
+  //   })
+  //   return backoff.then(function () {
+  //     return axiosIns(config)
+  //   })
+  // } else {
+  //   return Promise.reject(error)
+  // }
+  return Promise.reject(error)
 })
 const ajaxMethod = ['get', 'post']
 const api = {}
@@ -69,7 +71,7 @@ ajaxMethod.forEach((method) => {
         if (response.data.status === 401) {
           instance.$router.replace('/login')
         } else if (response.data.status === 200) {
-          resolve(response.data.data)
+          resolve(response.data)
         }
       }).catch(function (error) {
         console.log(error)

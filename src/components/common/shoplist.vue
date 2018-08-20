@@ -1,17 +1,17 @@
 <template>
   <div class="shoplist_container">
-    <ul v-load-more="loadmore" v-if="shopListArr.length" type="1">
+    <ul v-load-more="loadmoreMethod" v-if="shopListArr.length" type="1">
       <router-link v-for="item in shopListArr" tag="li" :key="item.id" class="shop_li" :to="{path: 'shop', query: {geohash: geohash, id: item.id}}">
         <section>
-          <img :src="imageBaseUrl + item.image_path" class="shop_img">
+          <img :src="imgBaseUrl + item.image_path" class="shop_img">
         </section>
         <hgroup class="shop_right">
-          <headedr class="shop_detail_header"><!--preminum额外费用-->
-            <h4 :class="item.is_premium ? 'preminum' : ''" class="shop_title ellipsis">{{item.name}}</h4>
-            <ul class="shop_detal_ul">
+          <header class="shop_detail_header"><!--preminum额外费用-->
+            <h4 :class="item.is_premium ? 'premium' : ''" class="shop_title ellipsis">{{item.name}}</h4>
+            <ul class="shop_detail_ul">
               <li v-for="item in item.supports" :key="item.id" class="supports">{{item.icon_name}}</li>
             </ul>
-          </headedr>
+          </header>
           <h5 class="rating_order_num">
             <section class="rating_order_num_left">
               <section class="rating_section">
@@ -29,7 +29,8 @@
           </h5>
           <h5 class="fee_distance">
             <p class="fee">
-              ￥{{item.minimum_order_amount}}起送<span class="segmentation">/</span>{{item.piecewise_agent_fee.tips}}
+              <!-- ￥{{item.minimum_order_amount}}起送<span class="segmentation">/</span>{{item.piecewise_agent_fee.tips}} -->
+              ￥{{item.float_minimum_order_amount}}起送<span class="segmentation">/</span>{{item.piecewise_agent_fee.tips}}
             </p>
             <p class="distance_time">
               <span v-if="Number(item.distance)">{{item.distance > 1000 ? (item.distance/1000).toFixed(2) + 'km': item.distance + 'm'}}
@@ -37,7 +38,7 @@
               </span>
               <span v-else>{{item.distance}}</span>
               <span class="segemtation">/</span>
-              <span class="order_time">{{item.order_load_time}}</span>
+              <span class="order_time">{{item.order_lead_time}}</span>
             </p>
           </h5>
         </hgroup>
@@ -45,7 +46,7 @@
     </ul>
     <ul v-else class="animation_opacity">
       <li class="list_back_li" v-for="item in 10" :key="item">
-        <img :src="imageUrl" class="list_back_svg">
+        <img src="../../images/shopback.svg" class="list_back_svg">
       </li>
     </ul>
     <p class="empty_data" v-if="touched">没有更多了</p>
@@ -71,15 +72,15 @@ import urls from '../../config/urls'
 export default {
   data () {
     return {
-      imageUrl: '../images/shopback.svg',
+      imagePath: '../images/shopback.svg',
       offset: 0, // 批次加载店铺列表，每次加载20个 limit = 20
       shopListArr: [], // 店铺列表数据
       preventRepeatReuqest: false, // 到达底部加载数据，防止重复加载
       showBackStatus: false, // 显示返回顶部按钮
       showLoading: true, // 显示加载动画
       touchend: false, // 没有更多数据
-      imgBaseUrl: imgBaseUrl,
-      touched: false
+      touched: false,
+      imgBaseUrl
     }
   },
   mounted () {
@@ -97,19 +98,10 @@ export default {
     ])
   },
   methods: {
-    async initData () {
-      let res = await this.getShopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId)
-      this.shopListArr = [...res]
-      if (res.length < 20) {
-        this.touchend = true
-      }
-      this.hideLoading()
-      // 开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
-      showBack(callbackStatus => {
-        this.showBackStatus = callbackStatus
-      })
+    initData () {
+      this.getShopList('init', this.latitude, this.longitude, this.offset, this.restaurantCategoryId)
     },
-    getShopList (latitude, longitude, offset = 0, restaurantCategoryId = '', restaurantCategoryIds = '', orderBy = '', deliveryMode = '', supportIds = []) {
+    getShopList (flag, latitude, longitude, offset = 0, restaurantCategoryId = '', restaurantCategoryIds = '', orderBy = '', deliveryMode = '', supportIds = []) {
       let supportStr = ''
       supportIds.forEach(item => {
         if (item.status) {
@@ -119,10 +111,38 @@ export default {
       let query = '?latitude=' + latitude + '&longitude=' + longitude + '&offset=' + offset + '&limit=20' + '&restaurant_category_id=' + restaurantCategoryId + '&restaurant_category_ids[]' + restaurantCategoryIds
       query += '&order_by=' + orderBy + '&delivery_mode[]=' + deliveryMode + supportStr
       this.$axios.get(urls.shopList + query).then((res) => {
-        return res
+        let length = res.data.length
+        if (length > 0) {
+          this.hideLoading()
+          switch (flag) {
+            case 'init':
+              this.shopListArr = [...res.data]
+              if (length < 20) {
+                this.touchend = true
+              }
+              // 开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
+              showBack(callbackStatus => {
+                this.showBackStatus = callbackStatus
+              })
+              break
+            case 'load':
+              this.shopListArr = [...this.shopListArr, ...res.data]
+              // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
+              if (length < 20) {
+                this.touchend = true
+                return
+              }
+              this.preventRepeatReuqest = false
+              break
+            case 'listenPropChange':
+              // 考虑到本地模拟数据是引用类型，所以返回一个新的数组
+              this.shopListArr = [...res.data]
+              break
+          }
+        }
       })
     },
-    async loadMore () {
+    loadmoreMethod () {
       if (this.touchend) {
         return
       }
@@ -134,28 +154,17 @@ export default {
       this.preventRepeatReuqest = true
       // 数据的定位加20位
       this.offset += 20
-      let res = await this.getShopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId)
-      this.hideLoading()
-      this.shopListArr = [...this.shopListArr, ...res]
-      // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
-      if (res.length < 20) {
-        this.touchend = true
-        return
-      }
-      this.preventRepeatReuqest = false
+      this.getShopList('load', this.latitude, this.longitude, this.offset, this.restaurantCategoryId)
     },
     // 返回顶部
     backTop () {
       animate(document.body, {scrollTop: '0'}, 400, 'ease-out')
     },
     // 监听父级传来的数据发生变化时，触发此函数重新根据属性值获取数据
-    async listenPropChange () {
+    listenPropChange () {
       this.showLoading = true
       this.offset = 0
-      let res = await this.getShopList(this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds)
-      this.hideLoading()
-      // 考虑到本地模拟数据是引用类型，所以返回一个新的数组
-      this.shopListArr = [...res]
+      this.getShopList('listenPropChange', this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds)
     },
     // 开发环境与编译环境loading隐藏方式不同
     hideLoading () {

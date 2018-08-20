@@ -8,8 +8,9 @@ let baseUrl = ''
 let routerMode = 'hash'
 let imgBaseUrl = ''
 if (process.env.NODE_ENV === 'development') {
-  imgBaseUrl = '/img/'
+  imgBaseUrl = '//localhost:8001'
   baseUrl = '//localhost:8001'
+  // baseUrl = '//192.168.5.192:8001'
 } else if (process.env.NODE_ENV === 'production') {
   baseUrl = '//elm.cangdu.org'
   imgBaseUrl = '//elm.cangdu.org/img/'

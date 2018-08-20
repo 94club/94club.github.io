@@ -12,14 +12,14 @@
 </template>
 
 <script>
-  export default {
-    props: ['alertText'],
-    methods: {
-      closeTip () {
-        this.$emit('closeTip')
-      }
+export default {
+  props: ['alertText'],
+  methods: {
+    closeTip () {
+      this.$emit('closeTip')
     }
   }
+}
 </script>
 <style lang="scss">
 @import '../../style/alertTip.scss';
