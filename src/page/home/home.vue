@@ -75,7 +75,7 @@ export default {
   methods: {
     getGuessCity (typeValue) {
       this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
-        this.guessCityObj = res
+        this.guessCityObj = res.data
         if (this.guessCityObj) {
           this.guessCity = this.guessCityObj.name
           this.guessCityid = this.guessCityObj.id
@@ -84,12 +84,12 @@ export default {
     },
     getGroupCity (typeValue) {
       this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
-        this.groupcity = res
+        this.groupcity = res.data
       })
     },
     getHotCity (typeValue) {
       this.$axios.get(urls.city + '?type=' + typeValue).then((res) => {
-        this.hotcity = res
+        this.hotcity = res.data
       })
     },
     // 点击图标刷新页面

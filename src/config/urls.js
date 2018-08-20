@@ -8,5 +8,6 @@ export default {
   getMobileCode: '/v4/mobile/verify_code/send',
   getCaptchas: '/v1/captchas',
   checkExist: '/v1/users/exists',
-  accountLogin: '/v2/login'
+  accountLogin: '/v2/login',
+  loginOut: '/v2/signout'
 }

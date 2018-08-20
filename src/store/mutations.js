@@ -16,7 +16,7 @@ export default {
 		if (!state.login) {
 			return
 		}
-		if (!info.message) {
+		if (info) {
 			state.userInfo = {...info}
 		} else {
 			state.userInfo = null
@@ -33,5 +33,14 @@ export default {
 	}) {
 		state.latitude = latitude;
 		state.longitude = longitude;
-	}
+	},
+	// 退出登录
+	[types.OUT_LOGIN] (state) {
+		state.userInfo = {}
+		state.login = false
+	},
+	// 保存图片
+	[types.SAVE_AVANDER] (state, imgPath) {
+		state.imgPath = imgPath
+	},
 }

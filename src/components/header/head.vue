@@ -36,7 +36,7 @@ export default {
     let userId = getStore('user_id')
     if (userId) {
       this.$axios.get(urls.user + '?user_id=' + userId).then((res) => {
-        this.$store.commit('GET_USERINFO', res)
+        this.$store.commit('GET_USERINFO', res.data)
       })
     }
   },
