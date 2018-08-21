@@ -11,14 +11,14 @@
                         </svg>
                     </span>
                     <div class="user-info">
-                        <p>{{username}}</p>
+                        <p>{{userInfo.username || '登录/注册'}}</p>
                         <p>
                             <span class="user-icon">
                                 <svg class="icon-mobile" fill="#fff">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
                                 </svg>
                             </span>
-                            <span class="icon-mobile-number">{{mobile}}</span>
+                            <span class="icon-mobile-number">{{userInfo.mobile || '暂无绑定手机号'}}</span>
                         </p>
                     </div>
                     <span class="arrow">
@@ -31,15 +31,15 @@
             <section class="info-data">
                 <ul class="clear">
                     <router-link to="/balance" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>{{parseInt(balance).toFixed(2)}}</b>元</span>
+                        <span class="info-data-top"><b>{{parseInt(userInfo.balance || 0).toFixed(2)}}</b>元</span>
                         <span class="info-data-bottom">我的余额</span>
                     </router-link>
                     <router-link to="/benefit" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>{{count}}</b>个</span>
+                        <span class="info-data-top"><b>{{userInfo.gift_amount || 0}}</b>个</span>
                         <span class="info-data-bottom">我的优惠</span>
                     </router-link>
                     <router-link to="/points" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>{{pointNumber}}</b>分</span>
+                        <span class="info-data-top"><b>{{userInfo.point || 0}}</b>分</span>
                         <span class="info-data-bottom">我的积分</span>
                     </router-link>
                 </ul>
@@ -158,7 +158,7 @@ export default {
     }
   },
   mounted () {
-    this.initData()
+    // this.initData()
   },
   mixins: [getImgPath],
   components: {
@@ -198,7 +198,7 @@ export default {
   },
   watch: {
     userInfo: function (value) {
-      this.initData()
+      // this.initData()
     }
   }
 }
