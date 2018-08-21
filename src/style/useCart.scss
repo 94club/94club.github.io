@@ -1,0 +1,69 @@
+@import './mixin';
+.page_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 202;
+  padding-top: 1.95rem;
+  background-color: #f5f5f5;
+  p,
+  span,
+  input {
+    font-family: Helvetica Neue, Tahoma, Arial;
+  }
+}
+
+.buy_for {
+  line-height: 2rem;
+  padding-left: 0.7rem;
+  @include sc(.6rem, #666);
+  span {
+    font-weight: bold;
+  }
+}
+
+.form_style {
+  display: flex;
+  flex-direction: column;
+  input {
+    border-bottom: 1px solid #f5f5f5;
+    padding-left: .7rem;
+    height: 2rem;
+    @include sc(.65rem, #999);
+  }
+}
+
+.determine {
+  text-align: center;
+  margin: 0 .7rem;
+  margin-top: 0.7rem;
+  line-height: 1.8rem;
+  border-radius: 0.2rem;
+  background-color: #ccc;
+  @include sc(.7rem, #fff);
+  font-weight: bold;
+}
+
+.could_pay {
+  background-color: #4cd964;
+}
+
+.Binding {
+  margin-top: 1rem;
+  h3 {
+    margin-bottom: .6rem;
+    text-align: center;
+    @include sc(.65rem, #aaa);
+    font-weight: normal;
+  }
+  p,
+  b {
+    @include sc(.5rem, #aaa);
+    line-height: .8rem;
+  }
+  p {
+    padding-left: 2rem;
+  }
+}

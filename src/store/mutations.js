@@ -43,4 +43,13 @@ export default {
 	[types.SAVE_AVANDER] (state, imgPath) {
 		state.imgPath = imgPath
 	},
+	// 会员卡价格纪录
+	[types.BUY_CART] (state, price) {
+		state.cartPrice = price;
+	},
+	//下单成功，保存订单返回信息
+	[types.ORDER_SUCCESS] (state, order) {
+		state.cartPrice = null;
+		state.orderMessage = order;
+	},
 }
