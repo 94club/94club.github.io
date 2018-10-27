@@ -1,0 +1,9 @@
+考虑适配---> hotcss
+考虑图标--->iconfont
+考虑cssreset
+网络请求选择axios
+数据通讯选择vuex
+图片懒加载vue-lazyload
+路由：
+未登录第一次进入 --> '/home'
+选择城市  --> '/city/:cityId'
